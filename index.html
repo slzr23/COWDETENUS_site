@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QCow'Détenus - QG Central</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="donnees.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* CORRECTION : L'encadré et l'espacement */
+        .section-preview { 
+            margin: clamp(40px, 8vw, 80px) 0; 
+            padding-top: 50px; /* Laisse de l'espace sous la bordure pour le titre */
+            border-top: 2px dashed #444; 
+            position: relative; 
+        }
+        .section-preview h2 {
+            margin-top: 0; /* Empêche le titre de remonter sur le label */
+        }
+        .section-preview::before {
+            content: "EXTRAIT DU DOSSIER"; 
+            position: absolute; 
+            top: 0;
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            background: var(--dark-bg); /* Utilise le fond global pour effacer la ligne derrière */
+            padding: 0 20px; 
+            color: #666;
+            font-family: var(--font-title); 
+            font-size: clamp(1rem, 3vw, 1.2rem); 
+            letter-spacing: 2px; 
+            white-space: nowrap;
+            z-index: 5;
+        }
+
+        .btn-center { text-align: center; margin-top: 30px; }
+        
+        .mugshot-mini {
+            height: 200px; position: relative; background-color: #222; overflow: hidden;
+            background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, #444 39px, #444 40px);
+            border-bottom: 3px solid var(--prison-orange); margin: -25px -25px 20px -25px; width: calc(100% + 50px);
+        }
+
+        .countdown-container { 
+            margin: 20px auto 50px auto; 
+            max-width: 600px; 
+            text-align: center; 
+        }
+        .countdown-title { 
+            font-family: var(--font-title); 
+            color: white; 
+            font-size: clamp(1.5rem, 4vw, 2rem); 
+            margin-bottom: 15px; 
+            letter-spacing: 2px; 
+        }
+        .countdown-timer { 
+            display: flex; 
+            justify-content: center; 
+            gap: clamp(10px, 3vw, 20px); 
+            flex-wrap: wrap; 
+        }
+        .timer-block {
+            background: var(--card-bg); 
+            border: 2px dashed var(--prison-orange);
+            border-radius: 5px; 
+            padding: 15px; 
+            min-width: clamp(70px, 15vw, 90px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.8), inset 0 0 15px rgba(255, 95, 0, 0.1);
+        }
+        .timer-number { 
+            font-family: var(--font-data); 
+            font-weight: 700; 
+            font-size: clamp(1.8rem, 5vw, 2.5rem); 
+            color: var(--prison-orange); 
+            display: block; 
+            line-height: 1; 
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(255, 95, 0, 0.5);
+        }
+        .timer-label { 
+            font-size: 0.8rem; 
+            color: #888; 
+            text-transform: uppercase; 
+            font-weight: bold; 
+            font-family: var(--font-body); 
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="police-tape"></div>
+    <header>
+        <button id="burger-btn" class="burger-btn" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="pendulum-container">
+            <div class="pendulum-chain"></div>
+            <img src="assets/image0.jpeg" alt="Cow'Détenus" class="logo-img" onerror="this.src='https://via.placeholder.com/200x200/ff6600/000?text=COW'">
+        </div>
+
+        <h1>COW'DÉTENUS</h1>
+        <p class="subtitle">La prison du CPP vous ouvre ses portes</p>
+    </header>
+
+    <nav id="mobile-menu" class="mobile-menu">
+        <a href="defis.html" class="btn" onclick="toggleMenu()"><i class="fas fa-handcuffs"></i> Défis</a>
+        <a href="equipage.html" class="btn" onclick="toggleMenu()"><i class="fas fa-id-badge"></i> La liste</a>
+        <a href="planning.html" class="btn" onclick="toggleMenu()"><i class="fas fa-calendar-alt"></i> Planning</a>
+    </nav>
+
+    <div class="container">
+        
+        <div class="countdown-container">
+            <div class="countdown-title">ÉVASION MINP PRÉVUE DANS :</div>
+            <div class="countdown-timer" id="timer">
+                <div class="timer-block">
+                    <span class="timer-number" id="days">00</span>
+                    <span class="timer-label">Jours</span>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-number" id="hours">00</span>
+                    <span class="timer-label">Heures</span>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-number" id="minutes">00</span>
+                    <span class="timer-label">Min</span>
+                </div>
+                <div class="timer-block">
+                    <span class="timer-number" id="seconds">00</span>
+                    <span class="timer-label">Sec</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-grid">
+            <a href="defis.html" class="btn"><i class="fas fa-handcuffs"></i> Défis</a>
+            <a href="equipage.html" class="btn"><i class="fas fa-id-badge"></i> Équipe</a>
+            <a href="planning.html" class="btn"><i class="fas fa-calendar-alt"></i> Planning</a>
+        </div>
+
+        <section class="section-preview">
+            <h2>Caméras de <span>Surveillance</span></h2>
+            <div class="grid-layout">
+                <div class="card" style="padding: 15px;">
+                    <div style="font-family: var(--font-data); color: var(--siren-red); font-size: 0.8rem; margin-bottom: 10px;">
+                        <i class="fas fa-circle siren-effect"></i> REC - CAM 01 (FILM)
+                    </div>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/lfdKB0hzyBM" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+                <div class="card" style="padding: 15px;">
+                    <div style="font-family: var(--font-data); color: var(--siren-red); font-size: 0.8rem; margin-bottom: 10px;">
+                        <i class="fas fa-circle siren-effect"></i> REC - CAM 02 (RAP)
+                    </div>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/NxNr322Lvf4" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-preview">
+            <h2>Travaux d'Intérêt <span>Général</span> (Défis)</h2>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Rachète ta liberté en accomplissant nos défis.</p>
+            <div class="grid-layout" id="preview-defis"></div>
+            <div class="btn-center">
+                <a href="defis.html" class="btn" style="max-width: 400px; margin: 0 auto;"><i class="fas fa-clipboard-list"></i> Voir tout les défis</a>
+            </div>
+        </section>
+
+        <section class="section-preview">
+            <h2>Nos <span>Détenus</span></h2>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Les têtes d'affiches.</p>
+            <div class="grid-layout" id="preview-equipage" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));"></div>
+            <div class="btn-center">
+                <a href="equipage.html" class="btn" style="max-width: 400px; margin: 0 auto;"><i class="fas fa-folder-open"></i> Consulter tous les dossiers</a>
+            </div>
+        </section>
+    </div>
+    
+    <div class="police-tape" style="margin-top: 50px;"></div>
+    <footer>
+        <p>© COW'DÉTENUS - Campagne BDE CPP 2026</p>
+        <p style="margin-top: 15px;">
+            <a href="https://www.instagram.com/les_cowdetenus" target="_blank" style="color: var(--prison-orange); font-size: 1.5rem; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+        </p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('burger-btn').querySelector('i');
+            
+            menu.classList.toggle('open');
+            
+            if (menu.classList.contains('open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                document.body.style.overflow = 'hidden';
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            const countDownDate = new Date("Mar 20, 2026 20:00:00").getTime();
+            
+            const countdownTimer = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = countDownDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+                if (distance < 0) {
+                    clearInterval(countdownTimer);
+                    document.querySelector(".countdown-container").innerHTML = `
+                        <h2 style='color:var(--siren-red); font-size:clamp(2rem, 6vw, 4rem); text-shadow: 0 0 20px rgba(255,0,60,0.8); border:none;' class='siren-effect'>
+                            🚨 L'ÉVASION A COMMENCÉ ! 🚨
+                        </h2>
+                    `;
+                }
+            }, 1000);
+
+            // Suppression du chargement des SOS
+
+            const defisContainer = document.getElementById('preview-defis');
+            if(SITE_DATA && SITE_DATA.defis) {
+                SITE_DATA.defis.slice(0, 2).forEach(defi => {
+                    defisContainer.innerHTML += `
+                        <div class="card">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
+                                <span style="background:#333; padding:3px 10px; font-weight:bold; font-size:0.8rem; text-transform:uppercase;">${defi.categorie}</span>
+                                <span style="color:var(--prison-orange); font-family:var(--font-title); font-size:1.8rem;">+${defi.points} XP</span>
+                            </div>
+                            <h3 style="font-size: clamp(1.5rem, 5vw, 2rem); margin:0 0 10px 0;">${defi.titre}</h3>
+                            <p style="flex-grow:1; color:#aaa; margin-top:0; font-size: clamp(0.8rem, 3vw, 1rem);">${defi.desc}</p>
+                        </div>`;
+                });
+            }
+
+            const equipageContainer = document.getElementById('preview-equipage');
+            if(SITE_DATA && SITE_DATA.equipage) {
+                SITE_DATA.equipage.slice(0, 3).forEach(inmate => {
+                    const ecrouId = Math.floor(100000 + Math.random() * 900000); 
+                    equipageContainer.innerHTML += `
+                        <div class="card" style="text-align:center;">
+                            <div class="mugshot-mini">
+                                <img src="${inmate.img}" style="width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(100%) contrast(1.2);" onerror="this.src='https://via.placeholder.com/300x300/333/666?text=NO+PHOTO'">
+                                <div style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); background: #000; border: 2px solid #fff; padding: 5px 15px; font-family: var(--font-data); font-size: 0.9rem; font-weight: bold; box-shadow: 2px 2px 0 #fff; white-space: nowrap;">ID: #${ecrouId}</div>
+                            </div>
+                            <h3 style="margin:0; font-size: clamp(1.5rem, 5vw, 2rem); color:var(--prison-orange);">${inmate.pseudo}</h3>
+                            <p style="color: #888; font-weight: bold; margin-bottom: 10px; font-size: 0.9rem; text-transform: uppercase;">${inmate.nom}</p>
+                            <span style="display: inline-block; background: #333; color: white; padding: 5px 15px; border-radius: 3px; font-size: 0.8rem; font-weight: 900; border-left: 3px solid var(--prison-orange); text-transform: uppercase;">${inmate.role}</span>
+                        </div>`;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
