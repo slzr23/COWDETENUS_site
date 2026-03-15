@@ -30,11 +30,43 @@
         
         /* Modal Style */
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center; backdrop-filter: blur(5px);}
-        .modal-content { background: var(--card-bg); border: 2px solid var(--prison-orange); max-width: 500px; width: 90%; padding: 30px; position: relative; border-top: 15px solid var(--prison-orange); }
+        .modal-content {
+            background: var(--card-bg);
+            border: 2px solid var(--prison-orange);
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            padding: 30px;
+            position: relative;
+            border-top: 15px solid var(--prison-orange);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
         .close-btn { position: absolute; top: 10px; right: 15px; color: #fff; font-size: 2rem; background: none; border: none; cursor: pointer; }
         .stamp-guilty { position: absolute; top: 20px; left: 20px; color: var(--siren-red); border: 4px solid var(--siren-red); padding: 5px 10px; font-family: var(--font-title); font-size: 2.5rem; transform: rotate(-15deg); opacity: 0.8; pointer-events: none;}
+        .desc-scroll {
+            color: #ccc;
+            line-height: 1.6;
+            margin-top: 20px;
+            white-space: pre-line;
+            overflow-y: scroll;
+            padding-right: 8px;
+            max-height: min(42vh, 360px);
+            scrollbar-width: thin;
+            scrollbar-color: var(--prison-orange) #222;
+            scrollbar-gutter: stable;
+            -webkit-overflow-scrolling: touch;
+        }
+        .desc-scroll::-webkit-scrollbar { width: 8px; }
+        .desc-scroll::-webkit-scrollbar-track { background: #222; }
+        .desc-scroll::-webkit-scrollbar-thumb { background: var(--prison-orange); border-radius: 8px; }
+        @media (max-width: 768px) {
+            .desc-scroll { padding-right: 6px; }
+            .desc-scroll::-webkit-scrollbar { width: 10px; }
+            .desc-scroll::-webkit-scrollbar-thumb { border: 2px solid #222; }
+        }
         
-        /* --- NOUVEAU : BOUTON RETOUR & MINI LOGO --- */
         .btn-back {
             position: absolute;
             top: clamp(15px, 3vw, 30px);
@@ -90,7 +122,7 @@
                 <p style="color:var(--siren-red); font-weight:bold; margin:0 0 5px 0;">MOTIF D'INCARCÉRATION :</p>
                 <p id="m-crime" style="margin:0; color:#fff; font-size: 1.1rem;"></p>
             </div>
-            <p id="m-desc" style="color:#ccc; line-height: 1.6; margin-top:20px;"></p>
+            <p id="m-desc" class="desc-scroll"></p>
         </div>
     </div>
 

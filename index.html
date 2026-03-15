@@ -9,15 +9,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
-        /* CORRECTION : L'encadré et l'espacement */
         .section-preview { 
             margin: clamp(40px, 8vw, 80px) 0; 
-            padding-top: 50px; /* Laisse de l'espace sous la bordure pour le titre */
+            padding-top: 50px;
             border-top: 2px dashed #444; 
             position: relative; 
         }
         .section-preview h2 {
-            margin-top: 0; /* Empêche le titre de remonter sur le label */
+            margin-top: 0;
         }
         .section-preview::before {
             content: "EXTRAIT DU DOSSIER"; 
@@ -25,7 +24,7 @@
             top: 0;
             left: 50%; 
             transform: translate(-50%, -50%);
-            background: var(--dark-bg); /* Utilise le fond global pour effacer la ligne derrière */
+            background: var(--dark-bg); 
             padding: 0 20px; 
             color: #666;
             font-family: var(--font-title); 
@@ -236,7 +235,6 @@
                 }
             }, 1000);
 
-            // Suppression du chargement des SOS
 
             const defisContainer = document.getElementById('preview-defis');
             if(SITE_DATA && SITE_DATA.defis) {

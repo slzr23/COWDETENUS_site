@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="donnees.js"></script>
     <style>
-        /* --- BOUTON RETOUR & MINI LOGO --- */
         .btn-back {
             position: absolute;
             top: clamp(15px, 3vw, 30px);
@@ -38,7 +37,7 @@
                 padding: 10px 15px; 
                 margin-bottom: 0;
             }
-            .btn-back span { display: none; } /* Cache le mot "Retour" sur mobile */
+            .btn-back span { display: none; }
             header { display: flex; flex-direction: column; align-items: center; padding-top: 50px; }
         }
     </style>
@@ -52,7 +51,7 @@
 
     <div class="container">
         <h2>Rachète ta <span>Liberté</span></h2>
-        <p style="text-align:center; color:#aaa; margin-bottom: 40px; font-size: 1.1rem;">Accomplis la mission. Prends une photo. Envoie-nous la preuve sur Insta pour gagner du respect.</p>
+        <p style="text-align:center; color:#aaa; margin-bottom: 40px; font-size: 1.1rem;">Accomplis la mission. Prends une photo. Envoie-nous la preuve sur Insta.</p>
         
         <div class="grid-layout" id="defis-grid"></div>
     </div>
@@ -66,7 +65,6 @@
 
             if(SITE_DATA && SITE_DATA.defis) {
                 SITE_DATA.defis.forEach(defi => {
-                    // C'est ici que l'on rajoute object-position: center; pour ne plus couper l'image
                     let imgHTML = defi.image ? `<img src="${defi.image}" style="width:calc(100% + 50px); height:200px; object-fit:cover; object-position: center; border-bottom: 2px dashed #444; margin: -25px -25px 15px -25px;">` : '';
                     
                     container.innerHTML += `
@@ -74,7 +72,7 @@
                             ${imgHTML}
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
                                 <span style="background:#333; padding:3px 10px; font-weight:bold; font-size:0.8rem; text-transform:uppercase; border-radius: 3px;">${defi.categorie}</span>
-                                <span style="color:var(--prison-orange); font-family:var(--font-title); font-size:1.8rem;">+${defi.points} XP</span>
+                                <span style="color:var(--prison-orange); font-family:var(--font-title); font-size:1.8rem;">+${defi.points} PTS</span>
                             </div>
                             <h3 style="font-size: clamp(1.5rem, 5vw, 2.2rem); margin:0 0 10px 0;">${defi.titre}</h3>
                             <p style="flex-grow:1; color:#aaa; margin-top:0;">${defi.desc}</p>
